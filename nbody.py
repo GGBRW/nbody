@@ -123,17 +123,18 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
 
 def main(n, write_to_file, ref="sun"):
     if(write_to_file):
-        with open("bodies.csv","w") as fh:
+        with open(write_to_file, "w") as fh:
             fh.write("name of the body; position x; position y; position z")
     offset_momentum(BODIES[ref])
     report_energy()
-    advance(0.01, n)
+    advance(0.01, n, write_to_file)
     report_energy()
 
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
-        main(int(sys.argv[1]))
+        write_to_file = sys.argv[2] if len(sys.argv) > 2 else None
+        main(int(sys.argv[1]), write_to_file)
         sys.exit(0)
     else:
         print(f"This is {sys.argv[0]}")
