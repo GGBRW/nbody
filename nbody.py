@@ -74,7 +74,7 @@ def bodies_to_string(bodies=BODIES):
         str += f"{i}; {bodies[i][0][0]}; {bodies[i][0][1]}; {bodies[i][0][2]}\n"
     return str
 
-def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
+def advance(dt, n, write_to_file, bodies=SYSTEM, pairs=PAIRS):
     for i in range(n):
         for ([x1, y1, z1], v1, m1, [x2, y2, z2], v2, m2) in pairs:
             dx = x1 - x2
@@ -94,7 +94,9 @@ def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
             r[0] += dt * vx
             r[1] += dt * vy
             r[2] += dt * vz
-        open("bodies.csv", "a").write(bodies_to_string())
+        if(write_to_file):
+            with open(write_to_file, "a") as fh:
+                fh.write(bodies_to_string())
 
 
 def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
@@ -119,9 +121,10 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
     v[2] = pz / m
 
 
-def main(n, ref="sun"):
-    with open("bodies.csv","w") as fh:
-        fh.write("name of the body; position x; position y; position z")
+def main(n, write_to_file, ref="sun"):
+    if(write_to_file):
+        with open("bodies.csv","w") as fh:
+            fh.write("name of the body; position x; position y; position z")
     offset_momentum(BODIES[ref])
     report_energy()
     advance(0.01, n)
