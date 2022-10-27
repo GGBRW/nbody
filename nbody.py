@@ -68,6 +68,11 @@ BODIES = {
 SYSTEM = tuple(BODIES.values())
 PAIRS = tuple(combinations(SYSTEM))
 
+def bodies_to_string(bodies=BODIES):
+    str = ""
+    for i in bodies:
+        str += f"{i}; {bodies[i][0][0]}; {bodies[i][0][1]}; {bodies[i][0][2]}\n"
+    return str
 
 def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
     for i in range(n):
