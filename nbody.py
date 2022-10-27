@@ -121,6 +121,7 @@ def main(n, ref="sun"):
 
 
 if __name__ == "__main__":
+    print("hoiiiiiiiiiii")
     if len(sys.argv) >= 2:
         main(int(sys.argv[1]))
         sys.exit(0)
