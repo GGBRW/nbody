@@ -14,6 +14,7 @@
 #define _USE_MATH_DEFINES // https://docs.microsoft.com/en-us/cpp/c-runtime-library/math-constants?view=msvc-160
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 
 // these values are constant and not allowed to be changed
@@ -260,9 +261,20 @@ int main(int argc, char **argv) {
         const unsigned int n = atoi(argv[1]);
         offset_momentum(state);
         std::cout << energy(state) << std::endl;
+        std::ofstream file;
+        if(write_file) {
+            const std::string file_name = argv[2];
+            file.open(file_name);
+            file << "name of the body; position x; position y; position z\n";
+        }
+
         for (int i = 0; i < n; ++i) {
             advance(state, 0.01);
+            if(write_file) file << bodies_to_string(state);
         }
+        
+        file.close();
+
         std::cout << energy(state) << std::endl;
         return EXIT_SUCCESS;
     }
