@@ -238,6 +238,17 @@ body state[] = {
         }
 };
 
+std::string bodies_to_string(body state[BODIES_COUNT]) {
+    std::string str = "";
+    for (unsigned int i = 0; i < BODIES_COUNT; ++i) {
+        std::string name = state[i].name;
+        std::string x = std::to_string(state[i].position.x);
+        std::string y = std::to_string(state[i].position.y);
+        std::string z = std::to_string(state[i].position.z);
+        str += name + "; " + x + "; " + y + "; " + z + "\n";
+    }
+    return str;
+}
 
 int main(int argc, char **argv) {
     if (argc != 2) {
