@@ -251,8 +251,9 @@ std::string bodies_to_string(body state[BODIES_COUNT]) {
     return str;
 }
 
+
 int main(int argc, char **argv) {
-    if (argc != 2) {
+    if (argc < 2) {
         std::cout << "This is " << argv[0] << std::endl;
         std::cout << "Call this program with an integer as program argument" << std::endl;
         std::cout << "(to set the number of iterations for the n-body simulation)." << std::endl;
@@ -261,6 +262,8 @@ int main(int argc, char **argv) {
         const unsigned int n = atoi(argv[1]);
         offset_momentum(state);
         std::cout << energy(state) << std::endl;
+
+        const bool write_file = argc >= 3;
         std::ofstream file;
         if(write_file) {
             const std::string file_name = argv[2];
